@@ -2,14 +2,37 @@
   <md-toolbar color="primary">
     <span>Receipt Store</span>
     <span class="fill-remaining-space"></span>
-    <button (click)="logout()" md-button>Logout</button>
+    <span class="display-name">{{displayName}}</span>
+    <button (click)="logout()" md-raised-button color="primary">Logout</button>
   </md-toolbar>
   <div class="app-content">
     <md-card>
-      Upload Receipt
+      <md-card-title>New receipt</md-card-title>
+      <md-card-content>
+        <div>
+          <md-input #receiptName placeholder="name"></md-input>
+        </div>
+        <div>
+          <md-input #receiptAmount placeholder="amount">
+            <span md-suffix>€&nbsp;</span>
+          </md-input>
+        </div>
+      </md-card-content>
+      <md-card-actions>
+        <button md-button (click)="add(receiptName.value, receiptAmount.value)">Add receipt</button>
+      </md-card-actions>
     </md-card>
     <md-card>
-      Receipts:
+      <md-card-title>Receipts:</md-card-title>
+      <md-card-content>
+        <md-list>
+          <md-list-item *ngFor="let receipt of receipts | async">
+            <h3 md-line>{{receipt.user}}</h3>
+            <p md-line>{{receipt.name}}</p>
+            <p md-line>{{receipt.amount}} €&nbsp;</p>
+          </md-list-item>
+        </md-list>
+      </md-card-content>
     </md-card>
   </div>
 </div>
