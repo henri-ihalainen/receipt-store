@@ -17,9 +17,15 @@
             <span md-suffix>€&nbsp;</span>
           </md-input>
         </div>
+        <input id="upload" type="file" #fileInput/>
+        <label md-button for="upload">Choose Image</label>
+        <span *ngIf="fileInput.value">OK!</span>
       </md-card-content>
       <md-card-actions>
-        <button md-button (click)="add(receiptName.value, receiptAmount.value)">Add receipt</button>
+        <button md-raised-button (click)="add(receiptName.value, receiptAmount.value, fileInput.files[0])">
+          Add Receipt
+        </button>
+        <md-spinner *ngIf="uploading"></md-spinner>
       </md-card-actions>
     </md-card>
     <md-card>
@@ -27,9 +33,12 @@
       <md-card-content>
         <md-list>
           <md-list-item *ngFor="let receipt of receipts | async">
-            <h3 md-line>{{receipt.user}}</h3>
-            <p md-line>{{receipt.name}}</p>
+            <button md-icon-button md-list-avatar (click)="goToUrl(receipt.url)">
+              <md-icon>file_download</md-icon>
+            </button>
+            <h3 md-line>{{receipt.name}}</h3>
             <p md-line>{{receipt.amount}} €&nbsp;</p>
+            <p md-line class="item-footer">{{receipt.user}} 1.12.2016</p>
           </md-list-item>
         </md-list>
       </md-card-content>
