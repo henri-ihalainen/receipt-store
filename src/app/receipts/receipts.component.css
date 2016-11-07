@@ -21,7 +21,12 @@
   padding-top: 5px
 }
 
+.spinner {
+  width: 30px;
+  height: 30px;
+  display: inline-block
+}
+
 input[type="file"] {
   display: none;
 }
-

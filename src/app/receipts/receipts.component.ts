@@ -14,6 +14,7 @@ export class ReceiptsComponent implements OnInit {
   private receipts;
   private ref = firebase.storage().ref();
   private uploading = false;
+  private fileAdded = false;
 
   constructor(private af: AngularFire, private router: Router, private location: Location) {
   }
@@ -35,7 +36,10 @@ export class ReceiptsComponent implements OnInit {
       amount: amount,
       user: this.displayName,
       url: res.downloadURL
-    }).then(() => this.uploading = false));
+    }).then(() => {
+      this.uploading = false;
+      this.fileAdded = false;
+    }));
   }
 
   logout() {

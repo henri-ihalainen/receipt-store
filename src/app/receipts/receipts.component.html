@@ -17,15 +17,15 @@
             <span md-suffix>€&nbsp;</span>
           </md-input>
         </div>
-        <input id="upload" type="file" #fileInput/>
+        <input id="upload" type="file" #fileInput (change)="fileAdded = true"/>
         <label md-button for="upload">Choose Image</label>
-        <span *ngIf="fileInput.value">OK!</span>
+        <md-icon *ngIf="fileAdded">done</md-icon>
       </md-card-content>
       <md-card-actions>
         <button md-raised-button (click)="add(receiptName.value, receiptAmount.value, fileInput.files[0])">
+          <md-spinner class="spinner" *ngIf="uploading"></md-spinner>
           Add Receipt
         </button>
-        <md-spinner *ngIf="uploading"></md-spinner>
       </md-card-actions>
     </md-card>
     <md-card>
