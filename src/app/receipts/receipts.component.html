@@ -10,7 +10,7 @@
       <md-card-title>New receipt</md-card-title>
       <md-card-content>
         <div>
-          <md-input #receiptName placeholder="name"></md-input>
+          <md-input #receiptDesc placeholder="description"></md-input>
         </div>
         <div>
           <md-input #receiptAmount placeholder="amount">
@@ -22,7 +22,7 @@
         <md-icon *ngIf="fileAdded">done</md-icon>
       </md-card-content>
       <md-card-actions>
-        <button md-raised-button (click)="add(receiptName.value, receiptAmount.value, fileInput.files[0])">
+        <button md-raised-button (click)="add(receiptDesc.value, receiptAmount.value, fileInput.files[0])">
           <md-spinner class="spinner" *ngIf="uploading"></md-spinner>
           Add Receipt
         </button>
@@ -36,9 +36,9 @@
             <button md-icon-button md-list-avatar (click)="goToUrl(receipt.url)">
               <md-icon>file_download</md-icon>
             </button>
-            <h3 md-line>{{receipt.name}}</h3>
+            <h3 md-line>{{receipt.description}}</h3>
             <p md-line>{{receipt.amount}} €&nbsp;</p>
-            <p md-line class="item-footer">{{receipt.user}} 1.12.2016</p>
+            <p md-line class="receipt-footer">{{receipt.user}} {{receipt.date | date: 'dd.MM.yyyy'}}</p>
           </md-list-item>
         </md-list>
       </md-card-content>

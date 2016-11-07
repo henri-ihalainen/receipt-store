@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFire, FirebaseAuthState } from 'angularfire2';
 import { Router } from '@angular/router';
-import  * as firebase from 'firebase';
-import { Location } from '@angular/common';
+import * as firebase from 'firebase';
+import { UUID } from 'angular2-uuid';
 
 @Component({
   selector: 'app-receipts',
@@ -16,7 +16,7 @@ export class ReceiptsComponent implements OnInit {
   private uploading = false;
   private fileAdded = false;
 
-  constructor(private af: AngularFire, private router: Router, private location: Location) {
+  constructor(private af: AngularFire, private router: Router) {
   }
 
   ngOnInit() {
@@ -29,13 +29,18 @@ export class ReceiptsComponent implements OnInit {
     this.receipts = this.af.database.list('/receipts');
   }
 
-  add(name, amount, file) {
+  add(description, amount, file: File) {
     this.uploading = true;
-    this.ref.child(file.name).put(file).then(res => this.receipts.push({
-      name: name,
+    const uuid = UUID.UUID();
+    const date = new Date();
+
+    this.ref.child(uuid).put(file).then(res => this.receipts.push({
+      description: description,
       amount: amount,
       user: this.displayName,
-      url: res.downloadURL
+      uuid: uuid,
+      url: res.downloadURL,
+      date: date.toISOString()
     }).then(() => {
       this.uploading = false;
       this.fileAdded = false;
