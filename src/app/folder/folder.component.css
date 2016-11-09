@@ -1,0 +1,23 @@
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.display-name {
+  padding-right: 10px;
+  font-size: 14px
+}
+
+.receipt-footer {
+  color: gray;
+  padding-top: 5px
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  display: inline-block
+}
+
+input[type="file"] {
+  display: none;
+}

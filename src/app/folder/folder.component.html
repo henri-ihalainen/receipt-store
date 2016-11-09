@@ -1,7 +1,6 @@
-<div class="receipts-content">
+<div class="app-content">
   <md-toolbar color="primary">
     <button md-icon-button [routerLink]="['/folders']"><md-icon>arrow_back</md-icon></button>
-    <span>Receipt Store</span>
     <span class="fill-remaining-space"></span>
     <span class="display-name">{{displayName}}</span>
     <button (click)="logout()" md-raised-button color="primary">Logout</button>
@@ -30,7 +29,7 @@
       </md-card-actions>
     </md-card>
     <md-card>
-      <md-card-title>Receipts:</md-card-title>
+      <md-card-title>Receipts</md-card-title>
       <md-card-content>
         <md-list>
           <md-list-item *ngFor="let receipt of receipts | async">

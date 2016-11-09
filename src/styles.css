@@ -1,2 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/core/theming/prebuilt/indigo-pink.css';
+
+.app-content md-card {
+  margin-bottom: 10px;
+}
+
+.app-content md-toolbar {
+  margin-bottom: 10px;
+}

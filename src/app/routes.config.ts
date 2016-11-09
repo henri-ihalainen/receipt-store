@@ -1,4 +1,4 @@
-import { ReceiptsComponent } from './receipts/receipts.component';
+import { FolderComponent } from './folder/folder.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth-guard.service';
 import { FoldersComponent } from './folders/folders.component';
@@ -11,13 +11,24 @@ export const routes = [
   },
   {
     path: 'receipts',
-    component: ReceiptsComponent,
+    component: FolderComponent,
     canActivate: [AuthGuard]
   },
   {
     path: 'folders',
-    component: FoldersComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        component: FoldersComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: ':id',
+        component: FolderComponent,
+        canActivate: [AuthGuard]
+      }
+    ]
   },
   {
     path: 'login',

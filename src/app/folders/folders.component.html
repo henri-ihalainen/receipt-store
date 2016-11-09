@@ -1,6 +1,21 @@
-<md-toolbar color="primary">
-  <span>Folders</span>
-</md-toolbar>
-<md-card>
-  <a md-button [routerLink]="['/receipts']">Open Folder</a>
-</md-card>
+<div class="app-content">
+  <md-toolbar color="primary">
+    <span>Folders</span>
+  </md-toolbar>
+  <md-card>
+    <md-card-subtitle>Add new folder</md-card-subtitle>
+    <md-input #folderName placeholder="name"></md-input>
+    <button md-icon-button (click)="new(folderName.value)">
+      <md-icon>add</md-icon>
+    </button>
+  </md-card>
+  <md-card>
+    <md-card-subtitle>Folders</md-card-subtitle>
+    <md-nav-list>
+      <md-list-item *ngFor="let folder of folders | async" [routerLink]="['/folders', folder.$key]">
+        <md-icon>folder</md-icon>
+        <span style="padding-left: 10px">{{folder.name}}</span>
+      </md-list-item>
+    </md-nav-list>
+  </md-card>
+</div>

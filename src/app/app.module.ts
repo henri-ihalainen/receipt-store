@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from '@angular/material';
 import { AngularFireModule } from 'angularfire2';
 import { LoginComponent } from './login/login.component';
-import { ReceiptsComponent } from './receipts/receipts.component';
+import { FolderComponent } from './folder/folder.component';
 import { routes } from './routes.config';
 import { RouterModule } from '@angular/router';
 import { AuthGuard } from './auth-guard.service';
@@ -17,7 +17,7 @@ import { FoldersComponent } from './folders/folders.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    ReceiptsComponent,
+    FolderComponent,
     FoldersComponent
   ],
   imports: [

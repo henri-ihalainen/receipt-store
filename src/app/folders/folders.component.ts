@@ -10,10 +10,10 @@ export class FoldersComponent implements OnInit {
   private folders;
 
   constructor(private af: AngularFire) {
-    this.folders = this.af.database.list('/folders');
   }
 
   ngOnInit() {
+    this.folders = this.af.database.list('/folders');
   }
 
   new(name) {

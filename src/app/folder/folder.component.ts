@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFire, FirebaseAuthState } from 'angularfire2';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import * as firebase from 'firebase';
 import { UUID } from 'angular2-uuid';
 
 @Component({
   selector: 'app-receipts',
-  templateUrl: './receipts.component.html',
-  styleUrls: ['./receipts.component.css']
+  templateUrl: './folder.component.html',
+  styleUrls: ['./folder.component.css']
 })
-export class ReceiptsComponent implements OnInit {
+export class FolderComponent implements OnInit {
   private displayName;
   private receipts;
-  private ref = firebase.storage().ref();
+  private storage;
   private uploading = false;
   private fileAdded = false;
 
-  constructor(private af: AngularFire, private router: Router) {
+  constructor(private af: AngularFire, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -26,7 +26,10 @@ export class ReceiptsComponent implements OnInit {
       }
     });
 
-    this.receipts = this.af.database.list('/receipts');
+    this.route.params.forEach(params => {
+      this.receipts = this.af.database.list('/folders/' + params['id'] + '/receipts');
+      this.storage = firebase.storage().ref('folders').child(params['id']).child('receipts');
+    });
   }
 
   add(description, amount, file: File) {
@@ -34,7 +37,7 @@ export class ReceiptsComponent implements OnInit {
     const uuid = UUID.UUID();
     const date = new Date();
 
-    this.ref.child(uuid).put(file).then(res => this.receipts.push({
+    this.storage.child(uuid).put(file).then(res => this.receipts.push({
       description: description,
       amount: amount,
       user: this.displayName,
