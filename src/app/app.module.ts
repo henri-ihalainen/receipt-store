@@ -12,13 +12,15 @@ import { routes } from './routes.config';
 import { RouterModule } from '@angular/router';
 import { AuthGuard } from './auth-guard.service';
 import { FoldersComponent } from './folders/folders.component';
+import { ReceiptComponent } from './receipt/receipt.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     FolderComponent,
-    FoldersComponent
+    FoldersComponent,
+    ReceiptComponent
   ],
   imports: [
     BrowserModule,

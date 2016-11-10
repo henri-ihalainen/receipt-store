@@ -14,7 +14,7 @@
     <md-nav-list>
       <md-list-item *ngFor="let folder of folders | async" [routerLink]="['/folders', folder.$key]">
         <md-icon>folder</md-icon>
-        <span style="padding-left: 10px">{{folder.name}}</span>
+        <span class="icon-padding">{{folder.name}}</span>
       </md-list-item>
     </md-nav-list>
   </md-card>

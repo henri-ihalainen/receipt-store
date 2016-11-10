@@ -13,6 +13,7 @@ export class FolderComponent implements OnInit {
   private displayName;
   private receipts;
   private storage;
+  private folderName;
   private uploading = false;
   private fileAdded = false;
 
@@ -27,8 +28,9 @@ export class FolderComponent implements OnInit {
     });
 
     this.route.params.forEach(params => {
-      this.receipts = this.af.database.list('/folders/' + params['id'] + '/receipts');
-      this.storage = firebase.storage().ref('folders').child(params['id']).child('receipts');
+      this.af.database.object('/folders/' + params['folder']).subscribe(folder => this.folderName = folder.name);
+      this.receipts = this.af.database.list('/folders/' + params['folder'] + '/receipts');
+      this.storage = firebase.storage().ref('folders').child(params['folder']).child('receipts');
     });
   }
 
