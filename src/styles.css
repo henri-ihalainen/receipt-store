@@ -8,3 +8,7 @@
 .app-content md-toolbar {
   margin-bottom: 10px;
 }
+
+.toolbar-name {
+  padding-left: 20px;
+}

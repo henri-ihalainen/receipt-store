@@ -56,8 +56,4 @@ export class FolderComponent implements OnInit {
     this.af.auth.logout();
     this.router.navigate(['login']);
   }
-
-  goToUrl(url) {
-    window.location.href = url;
-  }
 }
