@@ -5,7 +5,7 @@
   <md-card>
     <md-card-subtitle>Add new folder</md-card-subtitle>
     <md-input #folderName placeholder="name"></md-input>
-    <button md-icon-button (click)="new(folderName.value)">
+    <button md-icon-button [disabled]="!folderName.value" (click)="new(folderName.value); folderName.value = ''">
       <md-icon>add</md-icon>
     </button>
   </md-card>

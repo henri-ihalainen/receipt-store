@@ -11,25 +11,44 @@
   <div>
     <md-card>
       <md-card-title>New receipt</md-card-title>
-      <md-card-content>
-        <div>
-          <md-input #receiptDesc placeholder="description"></md-input>
-        </div>
-        <div>
-          <md-input #receiptAmount placeholder="amount">
-            <span md-suffix>€&nbsp;</span>
-          </md-input>
-        </div>
-        <input id="upload" type="file" accept="image/*" #fileInput (change)="fileAdded = true"/>
-        <label md-button for="upload">Choose Image</label>
-        <md-icon *ngIf="fileAdded">done</md-icon>
-      </md-card-content>
-      <md-card-actions>
-        <button md-raised-button (click)="add(receiptDesc.value, receiptAmount.value, fileInput.files[0])">
-          <md-spinner class="spinner" *ngIf="uploading"></md-spinner>
-          Add Receipt
-        </button>
-      </md-card-actions>
+      <form #folderForm="ngForm" novalidate>
+        <md-card-content>
+          <div>
+            <md-input
+              [(ngModel)]="description"
+              name="description"
+              #receiptDesc
+              required
+              placeholder="description"></md-input>
+          </div>
+          <div>
+            <md-input
+              [(ngModel)]="amount"
+              name="amount"
+              pattern="[0-9]+(\,[0-9][0-9]?)?"
+              #receiptAmount
+              placeholder="amount">
+              <span md-suffix>€&nbsp;</span>
+            </md-input>
+          </div>
+          <input
+            id="upload"
+            type="file"
+            accept="image/*"
+            #fileInput
+            (change)="fileAdded = true">
+          <label md-button for="upload">Choose Image</label>
+          <md-icon *ngIf="fileAdded">done</md-icon>
+        </md-card-content>
+        <md-card-actions>
+          <button md-raised-button
+                  (click)="add(receiptDesc.value, receiptAmount.value, fileInput.files[0])"
+                  [disabled]="!folderForm.valid || !fileInput.value">
+            <md-spinner class="spinner" *ngIf="uploading"></md-spinner>
+            Add Receipt
+          </button>
+        </md-card-actions>
+      </form>
     </md-card>
     <md-card>
       <md-card-title>Receipts</md-card-title>

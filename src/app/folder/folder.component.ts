@@ -17,6 +17,9 @@ export class FolderComponent implements OnInit {
   private uploading = false;
   private fileAdded = false;
 
+  private description: string;
+  private amount: string;
+
   constructor(private af: AngularFire, private router: Router, private route: ActivatedRoute) {
   }
 
