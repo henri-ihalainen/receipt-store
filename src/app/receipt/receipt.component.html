@@ -3,11 +3,34 @@
     <button md-icon-button [routerLink]="['/folders', folderId]">
       <md-icon>arrow_back</md-icon>
     </button>
-    <span class="toolbar-name">{{receipt.description}}</span>
+    <span class="toolbar-name">{{receipt?.description}}</span>
+    <span class="fill-remaining-space"></span>
+    <md-slide-toggle [(ngModel)]="editMode">Edit</md-slide-toggle>
   </md-toolbar>
+  <md-card *ngIf="editMode">
+    <md-card-title>Edit</md-card-title>
+    <form #form="ngForm" (ngSubmit)="save()">
+      <md-card-content>
+        <md-input
+          [(ngModel)]="editDescription"
+          name="description"
+          required
+          placeholder="description"></md-input>
+        <md-input
+          [(ngModel)]="editAmount"
+          name="amount"
+          pattern="[0-9]+(\,[0-9][0-9]?)?"
+          placeholder="amount"></md-input>
+      </md-card-content>
+      <md-card-actions>
+        <button type="submit" md-raised-button [disabled]="!form.valid">Save</button>
+        <button md-raised-button (click)="cancel()">Cancel</button>
+      </md-card-actions>
+    </form>
+  </md-card>
   <md-card>
-    <md-card-subtitle>{{receipt.user}} {{receipt.date | date: 'dd.MM.yyyy'}}</md-card-subtitle>
-    <md-card-title>{{receipt.amount}} €</md-card-title>
-    <img md-card-image src="{{receipt.url}}"/>
+    <md-card-subtitle>{{receipt?.user}} {{receipt?.date | date: 'dd.MM.yyyy'}}</md-card-subtitle>
+    <md-card-title>{{receipt?.amount}} €</md-card-title>
+    <img md-card-image src="{{receipt?.url}}"/>
   </md-card>
 </div>
