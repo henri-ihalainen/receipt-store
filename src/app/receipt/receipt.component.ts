@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 
 @Component({
@@ -15,7 +15,7 @@ export class ReceiptComponent implements OnInit {
   private receipt$: FirebaseObjectObservable<any>;
   private editMode: boolean = false;
 
-  constructor(private route: ActivatedRoute, private af: AngularFire) {
+  constructor(private route: ActivatedRoute, private af: AngularFire, private router: Router) {
   }
 
   ngOnInit() {
@@ -42,5 +42,13 @@ export class ReceiptComponent implements OnInit {
   cancel() {
     this.editDescription = this.receipt.description;
     this.editAmount = this.receipt.amount;
+  }
+
+  confirmDelete() {
+    if (confirm('Are you sure?')) {
+      firebase.storage().refFromURL(this.receipt.url).delete();
+      this.receipt$.remove();
+      this.router.navigate(['/folders', this.folderId]);
+    }
   }
 }

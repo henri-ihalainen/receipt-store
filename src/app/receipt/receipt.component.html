@@ -5,7 +5,12 @@
     </button>
     <span class="toolbar-name">{{receipt?.description}}</span>
     <span class="fill-remaining-space"></span>
-    <md-slide-toggle [(ngModel)]="editMode">Edit</md-slide-toggle>
+    <md-slide-toggle class="edit" [(ngModel)]="editMode">
+      <md-icon>mode_edit</md-icon>
+    </md-slide-toggle>
+    <button md-icon-button (click)="confirmDelete()">
+      <md-icon>delete</md-icon>
+    </button>
   </md-toolbar>
   <md-card *ngIf="editMode">
     <md-card-title>Edit</md-card-title>
