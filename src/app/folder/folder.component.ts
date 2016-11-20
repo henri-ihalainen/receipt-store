@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFire, FirebaseAuthState } from 'angularfire2';
+import { AngularFire, FirebaseAuthState, FirebaseObjectObservable } from 'angularfire2';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as firebase from 'firebase';
 import { UUID } from 'angular2-uuid';
@@ -12,13 +12,14 @@ import { UUID } from 'angular2-uuid';
 export class FolderComponent implements OnInit {
   private displayName;
   private receipts;
-  private storage;
+  private receiptImages;
   private folderName;
   private uploading = false;
   private fileAdded = false;
-
   private description: string;
   private amount: string;
+  private folderId: string;
+  private folder$: FirebaseObjectObservable<any>;
 
   constructor(private af: AngularFire, private router: Router, private route: ActivatedRoute) {
   }
@@ -31,9 +32,11 @@ export class FolderComponent implements OnInit {
     });
 
     this.route.params.forEach(params => {
-      this.af.database.object('/folders/' + params['folder']).subscribe(folder => this.folderName = folder.name);
-      this.receipts = this.af.database.list('/folders/' + params['folder'] + '/receipts');
-      this.storage = firebase.storage().ref('folders').child(params['folder']).child('receipts');
+      this.folderId = params['folder'];
+      this.folder$ = this.af.database.object('/folders/' + this.folderId);
+      this.folder$.subscribe(folder => this.folderName = folder.name);
+      this.receipts = this.af.database.list('/folders/' + this.folderId + '/receipts');
+      this.receiptImages = firebase.storage().ref('folders').child(this.folderId).child('receipts');
     });
   }
 
@@ -42,7 +45,7 @@ export class FolderComponent implements OnInit {
     const uuid = UUID.UUID();
     const date = new Date();
 
-    this.storage.child(uuid).put(file).then(res => this.receipts.push({
+    this.receiptImages.child(uuid).put(file).then(res => this.receipts.push({
       description: description,
       amount: amount,
       user: this.displayName,
@@ -58,5 +61,16 @@ export class FolderComponent implements OnInit {
   logout() {
     this.af.auth.logout();
     this.router.navigate(['login']);
+  }
+
+  confirmDelete() {
+    if (confirm('Are you sure?')) {
+      this.receipts.subscribe(url => {
+        console.log(url);
+        firebase.storage().refFromURL(url).delete();  
+        this.folder$.remove();
+        this.router.navigate(['/folders']);
+      });
+    }
   }
 }
