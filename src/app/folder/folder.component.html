@@ -1,69 +1,54 @@
 <div class="app-content">
-  <md-toolbar color="primary">
-    <button md-icon-button [routerLink]="['/folders']">
-      <md-icon>arrow_back</md-icon>
-    </button>
-    <span class="toolbar-name">{{folderName}}</span>
-    <span class="fill-remaining-space"></span>
-    <span class="display-name">{{displayName}}</span>
-    <button (click)="logout()" md-raised-button color="primary">Logout</button>
-    <button md-icon-button (click)="confirmDelete()"><md-icon>delete</md-icon></button>
-  </md-toolbar>
-  <div>
-    <md-card>
-      <md-card-title>New receipt</md-card-title>
-      <form #folderForm="ngForm" novalidate>
-        <md-card-content>
-          <div>
-            <md-input
-              [(ngModel)]="description"
-              name="description"
-              #receiptDesc
-              required
-              placeholder="description"></md-input>
-          </div>
-          <div>
-            <md-input
-              [(ngModel)]="amount"
-              name="amount"
-              pattern="[0-9]+(\,[0-9][0-9]?)?"
-              #receiptAmount
-              placeholder="amount">
-              <span md-suffix>€&nbsp;</span>
-            </md-input>
-          </div>
-          <!-- TODO: custom validator -->
-          <input
-            id="upload"
-            type="file"
-            accept="image/*"
-            #fileInput
-            (change)="fileAdded = true">
-          <label md-button for="upload">Choose Image</label>
-          <md-icon *ngIf="fileAdded">done</md-icon>
-        </md-card-content>
-        <md-card-actions>
-          <button md-raised-button
-                  (click)="add(receiptDesc.value, receiptAmount.value, fileInput.files[0])"
-                  [disabled]="!folderForm.valid || !fileInput.value">
+	<md-toolbar color="primary">
+		<span class="toolbar-name">{{folderName}}</span>
+		<md-toolbar-row>
+			<button md-icon-button [routerLink]="['/folders']">
+        <md-icon>arrow_back</md-icon>
+      </button>
+			<span class="fill-remaining-space"></span>
+			<span class="display-name">{{displayName}}</span>
+			<button (click)="logout()" md-raised-button color="primary">Logout</button>
+			<button md-icon-button (click)="confirmDelete()" disabled><md-icon>delete</md-icon></button>
+		</md-toolbar-row>
+	</md-toolbar>
+	<div>
+		<md-card>
+			<md-card-title>New receipt</md-card-title>
+			<form #folderForm="ngForm" novalidate>
+				<md-card-content>
+					<div>
+						<md-input [(ngModel)]="description" name="description" #receiptDesc required placeholder="description"></md-input>
+					</div>
+					<div>
+						<md-input [(ngModel)]="amount" name="amount" pattern="[0-9]+(\,[0-9][0-9]?)?" #receiptAmount placeholder="amount">
+							<span md-suffix>€&nbsp;</span>
+						</md-input>
+					</div>
+					<!-- TODO: custom validator -->
+					<input id="upload" type="file" accept="image/*" #fileInput (change)="fileAdded = true">
+					<label md-button for="upload">Choose Image</label>
+					<md-icon *ngIf="fileAdded">done</md-icon>
+				</md-card-content>
+				<md-card-actions>
+					<button md-raised-button (click)="add(receiptDesc.value, receiptAmount.value, fileInput.files[0])" [disabled]="!folderForm.valid || !fileInput.value">
             <md-spinner class="spinner" *ngIf="uploading"></md-spinner>
             Add Receipt
           </button>
-        </md-card-actions>
-      </form>
-    </md-card>
-    <md-card>
-      <md-card-title>Receipts</md-card-title>
-      <md-card-content>
-        <md-nav-list>
-          <md-list-item *ngFor="let receipt of receipts | async" [routerLink]="receipt.$key">
-            <md-icon md-list-avatar>receipt</md-icon>
-            <h3 md-line>{{receipt.description}}</h3>
-            <p md-line>{{receipt.amount}} €&nbsp;</p>
-            <p md-line class="receipt-footer">{{receipt.user}} {{receipt.date | date: 'dd.MM.yyyy'}}</p>
-          </md-list-item>
-        </md-nav-list>
-      </md-card-content>
-    </md-card>
-  </div>
+				</md-card-actions>
+			</form>
+		</md-card>
+		<md-card>
+			<md-card-title>Receipts</md-card-title>
+			<md-card-content>
+				<md-nav-list>
+					<md-list-item *ngFor="let receipt of receipts | async" [routerLink]="receipt.$key">
+						<md-icon md-list-avatar>receipt</md-icon>
+						<h3 md-line>{{receipt.description}}</h3>
+						<p md-line>{{receipt.amount}} €&nbsp;</p>
+						<p md-line class="receipt-footer">{{receipt.user}} {{receipt.date | date: 'dd.MM.yyyy'}}</p>
+					</md-list-item>
+				</md-nav-list>
+			</md-card-content>
+		</md-card>
+	</div>
 </div>

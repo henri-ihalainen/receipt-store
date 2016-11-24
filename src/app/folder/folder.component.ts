@@ -67,7 +67,7 @@ export class FolderComponent implements OnInit {
     if (confirm('Are you sure?')) {
       this.receipts.subscribe(url => {
         console.log(url);
-        firebase.storage().refFromURL(url).delete();  
+        firebase.storage().refFromURL(url).delete();
         this.folder$.remove();
         this.router.navigate(['/folders']);
       });
