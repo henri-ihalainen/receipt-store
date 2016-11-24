@@ -1,31 +1,25 @@
 <div class="app-component">
   <md-toolbar color="accent">
-    <button md-icon-button [routerLink]="['/folders', folderId]">
-      <md-icon>arrow_back</md-icon>
-    </button>
     <span class="toolbar-name">{{receipt?.description}}</span>
-    <span class="fill-remaining-space"></span>
-    <md-slide-toggle class="edit" [(ngModel)]="editMode">
-      <md-icon>mode_edit</md-icon>
-    </md-slide-toggle>
-    <button md-icon-button (click)="confirmDelete()">
+    <md-toolbar-row>
+      <button md-icon-button [routerLink]="['/folders', folderId]">
+        <md-icon>arrow_back</md-icon>
+      </button>
+      <span class="fill-remaining-space"></span>
+      <md-slide-toggle class="edit" [(ngModel)]="editMode">
+        <md-icon>mode_edit</md-icon>
+      </md-slide-toggle>
+      <button md-icon-button (click)="confirmDelete()">
       <md-icon>delete</md-icon>
     </button>
+    </md-toolbar-row>
   </md-toolbar>
   <md-card *ngIf="editMode">
     <md-card-title>Edit</md-card-title>
     <form #form="ngForm" (ngSubmit)="save()">
       <md-card-content>
-        <md-input
-          [(ngModel)]="editDescription"
-          name="description"
-          required
-          placeholder="description"></md-input>
-        <md-input
-          [(ngModel)]="editAmount"
-          name="amount"
-          pattern="[0-9]+(\,[0-9][0-9]?)?"
-          placeholder="amount"></md-input>
+        <md-input [(ngModel)]="editDescription" name="description" required placeholder="description"></md-input>
+        <md-input [(ngModel)]="editAmount" name="amount" pattern="[0-9]+(\,[0-9][0-9]?)?" placeholder="amount"></md-input>
       </md-card-content>
       <md-card-actions>
         <button type="submit" md-raised-button [disabled]="!form.valid">Save</button>
@@ -36,6 +30,6 @@
   <md-card>
     <md-card-subtitle>{{receipt?.user}} {{receipt?.date | date: 'dd.MM.yyyy'}}</md-card-subtitle>
     <md-card-title>{{receipt?.amount}} €</md-card-title>
-    <img md-card-image src="{{receipt?.url}}"/>
+    <img md-card-image src="{{receipt?.url}}" />
   </md-card>
 </div>
