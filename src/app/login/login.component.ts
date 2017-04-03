@@ -11,16 +11,11 @@ export class LoginComponent implements OnInit {
   private redirectUrl = '/';
 
   constructor(private af: AngularFire, private router: Router, route: ActivatedRoute) {
-    router.events
-      .filter((event: Event) => event instanceof NavigationCancel)
-      .subscribe(cancelEvent => this.redirectUrl = cancelEvent.url);
   }
 
   login() {
     this.af.auth.login().then(() => {
-        if (this.redirectUrl) {
-          this.router.navigate([this.redirectUrl])
-        }
+        this.router.navigate([this.redirectUrl])
       }
     );
   }
